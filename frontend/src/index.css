@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cagliostro&family=Hind+Madurai:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+a.active {
+  color: #fa580c;
+}
+a.active hr {
+    display: block;
+}
+
+*{
+    /* font-family: Outfit; */
+}
+
+.prata-regular {
+    font-family: "Prata", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+.scrollbar-none::-webkit-scrollbar{
+    display: none;
+}
+
+.animate-scroll {
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 10%;
+}
+.mirror::before {
+    content: ""; 
+    position: absolute;
+    width: 50%;
+    height: 100vh;
+    background: linear-gradient(90deg, transparent 0, hsla(0, 0%, 100%, .15));
+    top: -120%;
+    left: -20%;
+    transition: 0.7s;
+    transform: rotate(-25deg);
+}
+.mirror:hover::before{
+  transform: rotate(-20deg) translate(146px);
+  left: 120%;
+}
+input {
+  border: 1.5px solid #999696;
+  outline: none;
+}
+input:focus {
+  border-color: #FF4A17;
+  transition: all 0.2s ease-in-out;
+}
+input:-webkit-autofill {
+  background-color: white !important;
+  color: inherit !important;
+  /* box-shadow: 0 0 0 30px #fff inset !important; */
+}
+
+input:-webkit-autofill::first-line {
+  color: inherit !important;
+}
+
+.spin-button input[type=number]::-webkit-outer-spin-button,
+.spin-button input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.spin-button input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: transparent;
+  border: 1px solid #FF4A17;
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #FF4A17;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+
+@keyframes appear {
+    from {
+      opacity: 0;
+      clip-path: inset(0 100% 0 100%);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+  }
