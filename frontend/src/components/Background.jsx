@@ -18,7 +18,7 @@ const Background = ({ bg_image, title }) => {
               onClick={() => navigate("/home")}
               className="text-[#999696] cursor-pointer hover:text-orange-600"
             >
-              TRANG CHỬ
+              TRANG CHỦ
             </li>
             <li className="text-white flex pl-3 uppercase">
               <p className="pr-3">|</p>

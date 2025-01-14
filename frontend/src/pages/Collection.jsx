@@ -148,7 +148,7 @@ const Collection = () => {
   return (
     <div className="flex flex-col md:flex-row gap-1 md:gap-5 lg:gap-10 pt-24 border-t px-4 md:px-16 lg:px-24">
       {/* Filter Options */}
-      <div className="sm:min-w-60 lg:min-w-72">
+      <div className="md:w-1/4 sm:min-w-60 lg:min-w-72">
         <p
           onClick={() => setShowFilter(!showFilter)}
           className="my-2 text-lg md:text-xl font-medium flex items-center cursor-pointer gap-2 select-none"
@@ -168,20 +168,19 @@ const Collection = () => {
             style={
               theme === "light"
                 ? {
-                    background:
-                      "linear-gradient(267.18deg, #f6f7f8a3, #f6f7f8d9)",
+                    backgroundColor:
+                      "rgb(249 250 251 / var(--tw-bg-opacity, 1));",
                   }
                 : { background: "linear-gradient(267.18deg, #131313, #080808)" }
             }
-            className="w-full flex text-sm !bg-gray-300  p-2 rounded-md"
+            className="w-full flex text-sm !bg-gray-50 p-3 rounded-md"
           >
             <p
               onClick={() => setShowSearch(true)}
               className="cursor-pointer hover:text-orange-600 mr-1"
             >
-              Giá trị tìm kiếm{" "}
+              Giá trị tìm kiếm /<span className="ml-1">{search}</span>
             </p>
-            /<p className="ml-1">{search}</p>
           </div>
         ) : null}
         {/* Price Filter */}
@@ -194,7 +193,7 @@ const Collection = () => {
                 }
               : { background: "linear-gradient(267.18deg, #131313, #080808)" }
           }
-          className={`w-full rounded-xl !bg-gray-300 pl-5 py-3 mt-6 ${
+          className={`w-full rounded-xl !bg-gray-50 pl-5 py-3 mt-6 ${
             showFilter ? "" : "hidden"
           } md:block`}
         >
@@ -228,7 +227,7 @@ const Collection = () => {
                 }
               : { background: "linear-gradient(267.18deg, #131313, #080808)" }
           }
-          className={` rounded-xl !bg-gray-300  pl-5 py-3 mt-6 ${
+          className={` rounded-xl !bg-gray-50  pl-5 py-3 mt-6 ${
             showFilter ? "" : "hidden"
           } md:block`}
         >
@@ -289,7 +288,7 @@ const Collection = () => {
                 }
               : { background: "linear-gradient(267.18deg, #131313, #080808)" }
           }
-          className={` rounded-xl !bg-gray-300  pl-5 py-3 my-5 ${
+          className={` rounded-xl !bg-gray-50  pl-5 py-3 my-5 ${
             showFilter ? "" : "hidden"
           } md:block`}
         >

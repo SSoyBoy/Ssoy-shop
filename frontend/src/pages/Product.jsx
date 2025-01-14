@@ -7,12 +7,10 @@ import React, {
 } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
-import { assets } from "../assets/assets";
+import { assets, AiOutlineUser, IoMdSend } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { AiOutlineUser } from "react-icons/ai";
-import { IoMdSend } from "react-icons/io";
 import Pagination from "../components/Pagination";
 import Loader from "../components/Loader";
 
@@ -38,6 +36,9 @@ const Product = () => {
   const [totalComments, setTotalComments] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoadingComments, setIsLoadingComments] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
 
   const product = useMemo(
     () => products.find((item) => item._id === productId),
@@ -107,6 +108,13 @@ const Product = () => {
     }
   };
 
+  const handleMouseMove = (e, item) => {
+    const rect = e.target.getBoundingClientRect(); // Lấy kích thước và vị trí ảnh
+    const x = ((e.clientX - rect.left) / rect.width) * 100; // Tính vị trí X (%)
+    const y = ((e.clientY - rect.top) / rect.height) * 100; // Tính vị trí Y (%)
+    setHoverPosition({ x, y });
+  };
+
   if (!productData) return <div className="opacity-0"></div>;
 
   return (
@@ -118,25 +126,40 @@ const Product = () => {
           <div className="scrollbar-none flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
             {productData.image.map((item, index) => (
               <img
-                onClick={() => setImage(item)}
+                onClick={() => {
+                  setImage(item);
+                  setSelectedIndex(index);
+                }}
                 src={`${url}/images/` + item}
                 key={index}
-                className="w-[24%] rounded-lg sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer"
+                className={`w-[24%] rounded-lg sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer ${
+                  selectedIndex === index ? "border border-orange-500" : ""
+                }`}
                 alt=""
               />
             ))}
           </div>
-          <div className="w-full sm:w-[80%] relative">
+          <div
+            className="w-full h-max rounded-xl sm:w-[80%] relative overflow-hidden cursor-zoom-in"
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
             <img
               src={`${url}/images/` + image}
-              className="w-full h-auto rounded-xl"
+              className={`w-full h-auto rounded-xl transition-transform duration-300 ${
+                isHovering ? "scale-150" : "scale-100"
+              }`}
+              style={{
+                transformOrigin: `${hoverPosition.x}% ${hoverPosition.y}%`,
+              }}
               alt=""
             />
-            {productData.outOfStock ? (
-              <div className="absolute -top-1 right-1 border border-[#999696] border-t-black bg-black text-white p-2 text-[10px]">
-                Out of stock
+            {productData.outOfStock && (
+              <div className="absolute -top-1 right-1 border border-[#999696] border-t-black bg-red-600 text-white p-2 text-[10px]">
+                Hết hàng
               </div>
-            ) : null}
+            )}
           </div>
         </div>
         {/* Product Info */}
@@ -161,7 +184,7 @@ const Product = () => {
             {productData.description}
           </p>
           <div className="flex flex-col gap-4 my-8 font-medium">
-            <p>Select Size</p>
+            <p>Chọn Size</p>
             <div className="flex gap-2">
               {productData.sizes.map((item, index) => (
                 <button

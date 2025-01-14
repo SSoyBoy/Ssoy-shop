@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { assets } from "../assets/assets";
+import { assets, IoIosSearch } from "../assets/assets";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
@@ -12,6 +12,7 @@ const SearchBar = () => {
     products,
     url,
     currency,
+    theme,
   } = useContext(ShopContext);
   const [searchData, setSearchData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -66,10 +67,14 @@ const SearchBar = () => {
         className="fixed top-0 left-0 bottom-0 right-0 z-40 cursor-pointer"
       ></div>
       <div className="fixed top-[8%] left-[6%] bottom-[8%] right-[6%] sm:top-[10%] sm:left-[20%] sm:bottom-[10%] sm:right-[20%] flex z-50 items-center justify-center">
-        <div className="bg-[#181818] w-full h-full rounded-lg">
-          <div className="flex justify-between items-center rounded-xl m-2 border border-gray-300">
-            <div className="inline-flex w-full text-white items-center justify-center  px-3 py-2 ">
-              <img className="w-4 mr-2" src={assets.search_icon1} alt="" />
+        <div
+          className={`w-full h-full rounded-lg ${
+            theme === "dark" ? "bg-[#181818]" : "bg-white"
+          }`}
+        >
+          <div className="flex justify-between items-center rounded-xl m-2 border">
+            <div className="inline-flex w-full items-center justify-center  px-3 py-2 ">
+              <IoIosSearch className="w-5 h-5 mr-1" />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -98,7 +103,7 @@ const SearchBar = () => {
               </div>
             )}
           </div>
-          <div className="w-full h-[90%] overflow-y-scroll sm:px-2">
+          <div className="w-full h-[90%] overflow-y-auto sm:px-2">
             {searchData.length > 0 ? (
               searchData?.map((item, index) => (
                 <div
@@ -124,7 +129,7 @@ const SearchBar = () => {
                     />
                   </div>
                   <div className="w-[80%] text-xs sm:text-sm md:text-base px-4">
-                    <p className="text-white">{item?.name}</p>
+                    <p className="">{item?.name}</p>
                   </div>
                   <div className="text-sm text-red-700 font-medium">
                     {item.price.toLocaleString()}
@@ -133,7 +138,7 @@ const SearchBar = () => {
                 </div>
               ))
             ) : (
-              <div className="w-full flex justify-center text-white pt-4">
+              <div className="w-full flex justify-center pt-4">
                 Không tìm thấy kết quả nào.
               </div>
             )}

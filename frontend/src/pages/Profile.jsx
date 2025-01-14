@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import Title from "../components/Title";
 import { ShopContext } from "../context/ShopContext";
 import { useNavigate } from "react-router-dom";
-import { assets } from "../assets/assets";
+import {
+  assets,
+  FaEyeSlash,
+  FaArrowRightLong,
+  IoEyeSharp,
+  IoCameraReverseOutline,
+} from "../assets/assets";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { FaEyeSlash } from "react-icons/fa";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { IoEyeSharp, IoCameraReverseOutline } from "react-icons/io5";
 
 const Profile = () => {
   const { user, url, token, getUserData, theme, logout } =
@@ -108,8 +111,10 @@ const Profile = () => {
           type={isPassword && !isShowPass[type] ? "password" : "text"}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={`bg-inherit p-2 rounded-lg w-full ${
-            theme === "light" ? "text-black" : "text-white"
+          className={`focus:bg-inherit rounded-md py-1.5 px-3.5 w-full ${
+            theme === "dark"
+              ? "border-[#4d4d4d] bg-[#2a2a2a] text-white"
+              : "border-[#ebebeb] bg-[#fafafa] text-black"
           }`}
           placeholder={placeholder}
           required
@@ -139,14 +144,14 @@ const Profile = () => {
   );
 
   return (
-    <div className="py-24 px-4 md:px-16 lg:px-24 min-h-[80vh]">
-      <div className="text-xl">
+    <div className="">
+      {/* <div className="text-xl">
         <Title text1="Thông tin" text2="cá nhân" />
-      </div>
+      </div> */}
       {user ? (
         <div className="flex items-center justify-center">
           <div className="max-w-4xl flex flex-col sm:flex-row gap-4">
-            <div className="w-full md:w-1/4 rounded-md p-4">
+            <div className="w-full sm:w-1/4 rounded-md p-4">
               <label htmlFor="image" className="w-full relative cursor-pointer">
                 <img
                   src={
@@ -170,16 +175,10 @@ const Profile = () => {
                 }
                 accept="image/*"
               />
-              <p className="text-center mt-4 font-semibold">{formData.name}</p>
+              <p className="text-center mt-4 font-semibold">{user?.name}</p>
             </div>
             <div className="w-full md:w-3/4">
-              <div
-                className={`w-full shadow-md rounded-md p-4 ${
-                  theme === "light"
-                    ? "bg-white text-[#444]"
-                    : "bg-[#111] text-[#999696]"
-                }`}
-              >
+              <div className={`w-full shadow-md rounded-md p-4`}>
                 <div className="flex gap-4">
                   {["Thông tin cá nhân", "Đổi mật khẩu"].map((text, index) => (
                     <h1
@@ -213,7 +212,9 @@ const Profile = () => {
                       type="text"
                       value={user.email}
                       disabled
-                      className="bg-orange-400 w-full p-2 border-none text-white rounded-lg cursor-not-allowed"
+                      className={`w-full p-2 border-none rounded-lg cursor-not-allowed ${
+                        theme === "dark" ? "bg-[#2a2a2a]" : "bg-[#e0e0e0]"
+                      }`}
                     />
                   </>
                 ) : (
@@ -252,7 +253,7 @@ const Profile = () => {
               </div>
               <div className="flex justify-end">
                 <button
-                  className="px-3 py-2 rounded-lg bg-[#ff4a17] text-white uppercase font-medium mt-4"
+                  className="px-3 py-2 rounded-sm border transition-all duration-300 border-[#ff4a17] text-[#ff4a17] hover:text-white hover:bg-[#ff4a17] uppercase font-normal mt-4"
                   onClick={
                     currentState === "profile" ? handleEdit : handleChangePass
                   }

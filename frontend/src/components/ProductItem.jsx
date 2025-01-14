@@ -22,7 +22,7 @@ const ProductItem = ({
   return (
     <Link
       to={`/product/${id}`}
-      className="w-full flex flex-col group rounded-lg cursor-pointer relative flex-1"
+      className="w-full flex flex-col group rounded-lg cursor-pointer relative flex-1 pb-2.5"
       key={index}
     >
       <div className="flex overflow-hidden w-full relative rounded-tl-lg rounded-tr-lg flex-1">
@@ -43,7 +43,7 @@ const ProductItem = ({
           onMouseLeave={() => setIsHovered(false)}
         />
         {outOfStock ? (
-          <div className="absolute -top-1 right-1 border border-[#999696] border-t-black bg-black text-white p-2 text-[10px]">
+          <div className="absolute -top-1 right-1 border border-[#999696] border-t-black bg-red-600 text-white p-2 text-[10px]">
             Hết hàng
           </div>
         ) : null}

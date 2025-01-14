@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
-import { assets } from "../assets/assets";
+import {
+  assets,
+  BiSupport,
+  RiExchangeFundsLine,
+  LiaShippingFastSolid,
+} from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
-import { BiSupport } from "react-icons/bi";
-import { RiExchangeFundsLine } from "react-icons/ri";
-import { LiaShippingFastSolid } from "react-icons/lia";
 
 const OutPolicy = () => {
   const { theme } = useContext(ShopContext);

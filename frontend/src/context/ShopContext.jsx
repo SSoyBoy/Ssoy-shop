@@ -16,6 +16,11 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [listAddress, setListAddress] = useState([]);
+
+  const [wards, setWards] = useState([]);
   const navigate = useNavigate();
 
   const addToCart = async (itemId, size) => {
@@ -108,6 +113,21 @@ const ShopContextProvider = (props) => {
     setCartItems(response.data.cartData);
   };
 
+  const fetchAddress = async () => {
+    console.log("token", token);
+
+    const response = await axios.post(
+      `${url}/api/address/getalladdress`,
+      {},
+      {
+        headers: { token },
+      }
+    );
+    if (response.data.success) {
+      setListAddress(response.data.addresses);
+    }
+  };
+
   const getUserData = async (token) => {
     try {
       if (!token) {
@@ -153,6 +173,43 @@ const ShopContextProvider = (props) => {
     return formattedDate;
   }, []);
 
+  const fetchProvinces = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `https://provinces.open-api.vn/api/?depth=1`
+      );
+      setProvinces(response.data);
+    } catch (error) {
+      console.error("Failed to fetch provinces", error);
+    }
+  }, []);
+
+  const fetchDistricts = useCallback(async (provinceCode) => {
+    if (!provinceCode) return;
+    try {
+      const response = await axios.get(
+        `https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`
+      );
+      setDistricts(response.data.districts);
+    } catch (error) {
+      console.error("Failed to fetch districts", error);
+    }
+  }, []);
+
+  const fetchWards = useCallback(async (districtCode) => {
+    if (!districtCode) return;
+    try {
+      const response = await axios.get(
+        `https://provinces.open-api.vn/api/d/${districtCode}?depth=2`
+      );
+      setWards(response.data.wards);
+    } catch (error) {
+      console.error("Failed to fetch wards", error);
+    }
+  }, []);
+
+  console.log("cartItems", cartItems);
+
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -163,13 +220,18 @@ const ShopContextProvider = (props) => {
       setTheme(localStorage.getItem("theme"));
       if (storedToken) {
         setToken(storedToken);
-        await getCartData(storedToken);
-        await getUserData(storedToken);
       }
-
       await fetchProducts();
     }
     loadData();
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      fetchAddress();
+      getCartData(token);
+      getUserData(token);
+    }
   }, [token]);
 
   const value = {
@@ -197,6 +259,19 @@ const ShopContextProvider = (props) => {
     theme,
     setTheme,
     logout,
+    fetchProvinces,
+    fetchDistricts,
+    fetchWards,
+    provinces,
+    setProvinces,
+    districts,
+    setDistricts,
+    wards,
+    setWards,
+    listAddress,
+    setListAddress,
+    fetchAddress,
+    setCartItems,
   };
   return (
     <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>

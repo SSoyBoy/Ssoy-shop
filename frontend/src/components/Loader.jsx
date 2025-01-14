@@ -1,5 +1,5 @@
 import React from "react";
-import { RiLoader2Line } from "react-icons/ri";
+import { RiLoader2Line } from "../assets/assets";
 
 const Loader = ({ text }) => {
   return (

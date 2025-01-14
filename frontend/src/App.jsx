@@ -17,11 +17,14 @@ import { ShopContext } from "./context/ShopContext";
 import NavBar from "./components/Navbar";
 import Profile from "./pages/Profile";
 import Verify from "./pages/Verify";
+import Account from "./pages/Account";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
-  const { token, theme } = useContext(ShopContext);
+  const { theme } = useContext(ShopContext);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     if (token) {
@@ -29,7 +32,7 @@ const App = () => {
     } else {
       pathname.includes("/product") && navigate("/login");
     }
-  }, [pathname, token]);
+  }, [token, pathname]);
 
   return (
     <div>
@@ -40,7 +43,7 @@ const App = () => {
       </div>
       <div
         className={` min-h-[80vh]  ${
-          theme === "light" ? "bg-white text-black" : "text-white bg-[#181818]"
+          theme === "dark" ? "text-white bg-[#181818]" : "bg-white text-black"
         }`}
       >
         <ToastContainer />
@@ -55,9 +58,11 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/place-order" element={<PlaceOrder />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/verify" element={<Verify />} />
+          <Route path="/account/:action" element={<Account />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/404" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
       <Footer />

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "./Title";
 import ProductItem from "./ProductItem";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowRightLong } from "../assets/assets";
 
 const Slider = () => {
   const { products, url } = useContext(ShopContext);

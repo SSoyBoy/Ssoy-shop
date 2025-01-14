@@ -1,37 +1,12 @@
 import React, { useContext } from "react";
-import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
+import { FaArrowRightLong } from "../assets/assets";
 
 const Hero = () => {
   const { theme } = useContext(ShopContext);
   const navigate = useNavigate();
   return (
-    // <div className="flex flex-col sm:flex-row border border-gray-400 relative">
-    //   {/* Hero left side */}
-    //   <div className="w-full sm:w-1/2 flex items-center justify-center py-10 sm:py-0">
-    //     <div className="text-[#414141]">
-    //       <div className="flex items-center gap-2">
-    //         <p className="w-8 md:w-11 h-[2px] bg-[#414141]"></p>
-    //         <p className="font-medium text-sm md:text-base">OUT BESTSELLERS</p>
-    //       </div>
-    //       <h1 className="prata-regular text-3xl sm:py-3 lg:text-5xl leading-relaxed">
-    //         Lastest Arrivals
-    //       </h1>
-    //       <div
-    //         className="flex items-center
-    //       gap-2"
-    //       >
-    //         <p className="font-semibold text-sm md:text-base test">SHOP NOW</p>
-    //         <p className="w-8 md:w-11 h-[1px] bg-[#414141]"></p>
-    //       </div>
-    //     </div>
-    //   </div>
-    //   {/* Hero Right Side */}
-    //   <div className="w-full cursor-pointer relative overflow-hidden sm:w-1/2 mirror">
-    //     <img src={assets.hero_img} alt="" />
-    //   </div>
-    // </div>
     <div className="mx-[6%] relative py-10">
       <div className="w-full cursor-pointer relative overflow-hidden md:w-3/5 mirror ">
         <div className="w-full relative">

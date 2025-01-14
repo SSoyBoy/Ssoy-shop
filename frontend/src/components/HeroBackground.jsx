@@ -1,25 +1,5 @@
 import React from "react";
-import { assets } from "../assets/assets";
-import { FaArrowRightLong } from "react-icons/fa6";
-
-const funFact = [
-  {
-    title: "Global Happy Clients",
-    total: "40K",
-  },
-  {
-    title: "Project Completed",
-    total: "50K",
-  },
-  {
-    title: "Team Members",
-    total: "245",
-  },
-  {
-    title: "Digital products",
-    total: "550",
-  },
-];
+import { assets, FaArrowRightLong } from "../assets/assets";
 
 const HeroBackground = () => {
   return (
@@ -83,45 +63,6 @@ const HeroBackground = () => {
           <div className="w-1 h-1 bg-white rounded-[50%] animate-bounce "></div>
         </a>
       </div>
-      {/* container */}
-      {/* <div className="max-w-7xl mx-auto w-full px-3">
-        <div className="-mt-32 items-center bg-gradient-to-r from-[#080808] to-[#151515] rounded-2xl flex px-20 py-[60px] relative z-1 w-full">
-          <div
-            style={{ backgroundImage: `url(${assets.funfact_shape_bg})` }}
-            className=" bg-[100%] bg-no-repeat rounded-2xl h-full absolute left-0 top-0 w-full"
-          ></div>
-          <div className="relative w-[40%] z-2 block ">
-            <div className="block">
-              <h2 className="text-5xl mb-5 text-white font-semibold ">
-                Our fun fact
-              </h2>
-              <p className="text-gray-300">
-                Sed ut perspiciatis unde omnis iste natus error voluptatem
-                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                quae ab illo inventore veritatis.
-              </p>
-            </div>
-          </div>
-          <div className="relative pl-20 z-2 ">
-            <div className="gap-x-10 gap-y-9 grid grid-cols-2">
-              {funFact.map((items) => (
-                <div className="items-center flex">
-                  <div className="text-5xl mr-3 text-white font-semibold ">
-                    {items?.total}
-                  </div>
-                  <div className="block">
-                    <span className="block text-xl font-bold -mt-1 text-orange-600">
-                      +
-                    </span>
-                    <p className="text-gray-300">{items?.title}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div> */}
-      {/* end container */}
     </div>
   );
 };

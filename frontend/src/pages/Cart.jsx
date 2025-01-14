@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { FaRegTrashAlt } from "../assets/assets";
 
 const Cart = () => {
   const {
@@ -17,9 +17,9 @@ const Cart = () => {
 
   const [cartData, setCartData] = useState([]);
 
-  useEffect(() => {
-    const localCart = JSON.parse(localStorage.getItem("cartData") || "{}");
+  console.log("cartData", cartData);
 
+  useEffect(() => {
     const tempData = [];
     for (const items in cartItems) {
       for (const item in cartItems[items]) {
@@ -65,7 +65,7 @@ const Cart = () => {
             return (
               <div
                 key={index}
-                className="py-4 border-t border-b border-[#999696] grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4"
+                className="py-4 border-t border-b border-gray-400 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4"
               >
                 <div className="flex items-start gap-6">
                   <img
@@ -121,9 +121,15 @@ const Cart = () => {
       <div className="flex justify-end py-20">
         <div className="w-full sm:w-[450px]">
           <CartTotal />
-          <div className="w-full mt-4 flex justify-end items-center">
+          <div
+            className={`w-full mt-4 flex justify-end items-center ${
+              cartData.length === 0 ? "cursor-not-allowed" : "cursor-pointer"
+            }`}
+          >
             <div
-              onClick={() => navigate("/place-order")}
+              onClick={() => {
+                cartData.length > 0 && navigate("/place-order");
+              }}
               className="relative group"
             >
               <button className="bg-[#ff4a17] rounded-xl font-semibold text-white text-xs px-10 py-4">
@@ -131,7 +137,7 @@ const Cart = () => {
               </button>
               <div
                 style={{ background: "rgba(0, 0, 0, 0.4)" }}
-                className="absolute cursor-pointer rounded-xl w-0 top-0 bottom-0 transition-all duration-300 group-hover:w-full"
+                className="absolute rounded-xl w-0 top-0 bottom-0 transition-all duration-300 group-hover:w-full"
               ></div>
             </div>
           </div>
