@@ -4,7 +4,7 @@ import { FaArrowRightLong } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import Input from "../components/input";
+import Input from "../components/Input";
 import { toast } from "react-toastify";
 import Profile from "./Profile";
 import Orders from "./Orders";
