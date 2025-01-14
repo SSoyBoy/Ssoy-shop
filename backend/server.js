@@ -7,6 +7,7 @@ import userRoute from "./routes/userRoute.js";
 import cartRoute from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 import commentRoute from "./routes/commentRoute.js";
+import addressRoute from "./routes/addressRoute.js";
 
 // app config
 const app = express();
@@ -25,6 +26,7 @@ app.use("/api/user", userRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/order", orderRouter);
 app.use("/api/comment", commentRoute);
+app.use("/api/address", addressRoute);
 
 app.use("/images", express.static("uploads"));
 
