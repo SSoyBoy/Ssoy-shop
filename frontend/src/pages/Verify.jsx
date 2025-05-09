@@ -24,7 +24,7 @@ const Verify = () => {
 
   useEffect(() => {
     verifyPayment();
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="flex flex-col pt-24 items-center m-auto mt-14 gap-4 text-white min-h-[50vh]">
