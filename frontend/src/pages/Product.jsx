@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets, AiOutlineUser, IoMdSend } from "../assets/assets";
@@ -108,7 +102,7 @@ const Product = () => {
     }
   };
 
-  const handleMouseMove = (e, item) => {
+  const handleMouseMove = (e) => {
     const rect = e.target.getBoundingClientRect(); // Lấy kích thước và vị trí ảnh
     const x = ((e.clientX - rect.left) / rect.width) * 100; // Tính vị trí X (%)
     const y = ((e.clientY - rect.top) / rect.height) * 100; // Tính vị trí Y (%)

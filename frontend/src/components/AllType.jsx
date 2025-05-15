@@ -1,5 +1,3 @@
-import React from "react";
-import Title from "./Title";
 import { useNavigate } from "react-router-dom";
 
 const AllType = () => {

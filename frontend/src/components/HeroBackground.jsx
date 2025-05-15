@@ -1,4 +1,3 @@
-import React from "react";
 import { assets, FaArrowRightLong } from "../assets/assets";
 
 const HeroBackground = () => {

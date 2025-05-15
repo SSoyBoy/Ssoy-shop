@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { GrFormNext } from "../assets/assets";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";

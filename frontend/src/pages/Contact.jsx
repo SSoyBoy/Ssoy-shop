@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import Title from "../components/Title";
+import { useContext } from "react";
 import { assets } from "../assets/assets";
 import NewsletterBox from "../components/NewsletterBox";
 import Background from "../components/Background";

@@ -1,4 +1,3 @@
-import React from "react";
 import { RiLoader2Line } from "../assets/assets";
 
 const Loader = ({ text }) => {

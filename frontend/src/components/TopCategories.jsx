@@ -1,9 +1,6 @@
-import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShopContext } from "../context/ShopContext";
 
 const TopCategories = () => {
-  const { theme } = useContext(ShopContext);
   const navigate = useNavigate();
   return (
     <div className="px-5 sm:px-[6%] py-20">

@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import Title from "../components/Title";
+import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { useNavigate } from "react-router-dom";
 import {
@@ -59,6 +58,7 @@ const Profile = () => {
         toast.error("Lỗi khi chỉnh sửa");
       }
     } catch (error) {
+      console.log(error);
       toast.error("An error occurred");
     }
   };

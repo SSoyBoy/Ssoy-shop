@@ -1,19 +1,17 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import {
-  assets,
   AiFillYoutube,
   AiOutlineTwitter,
   FaLinkedinIn,
   TbBrandSlack,
 } from "../assets/assets";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 
 const Services = ["Trang chủ", "Bộ sưu tập", "Về chúng tôi", "Liên hệ"];
 
 const Footer = () => {
   const { theme } = useContext(ShopContext);
-  const navigate = useNavigate();
   return (
     <div>
       <div

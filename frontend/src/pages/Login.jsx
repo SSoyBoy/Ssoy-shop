@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -53,7 +53,7 @@ const Login = () => {
   const renderInput = (label, name, type = "text", value, placeholder) => (
     <div className="relative w-full">
       <label
-        for={name}
+        htmlFor={name}
         className="pt-0 pr-2 pb-0 pl-2 absolute -mt-3 ml-2 font-medium text-gray-600 bg-white"
       >
         {label}

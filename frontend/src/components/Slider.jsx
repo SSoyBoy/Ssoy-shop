@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "./Title";
 import ProductItem from "./ProductItem";
-import { FaArrowRightLong, IoIosArrowUp } from "../assets/assets";
+import { IoIosArrowUp } from "../assets/assets";
 
 const Slider = () => {
   const { products } = useContext(ShopContext);
@@ -135,13 +135,13 @@ const Slider = () => {
             className="absolute left-1 top-[45%] text-2xl select-none text-black rounded-sm transition-all duration-200 hover:text-white hover:bg-black"
             onClick={prevSlide}
           >
-            <IoIosArrowUp className="w-6 rotate-90" />
+            <IoIosArrowUp className="w-6 -rotate-90" />
           </button>
           <button
             className="absolute right-1 top-[45%] text-2xl select-none text-black rounded-sm transition-all duration-200 hover:text-white hover:bg-black"
             onClick={nextSlide}
           >
-            <IoIosArrowUp className="w-6 -rotate-90" />
+            <IoIosArrowUp className="w-6 rotate-90" />
           </button>
         </div>
       </div>
