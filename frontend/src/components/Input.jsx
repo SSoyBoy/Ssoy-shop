@@ -10,6 +10,7 @@ const Input = ({
   options = [],
   required = false,
   isSelect = false,
+  error,
 }) => {
   const { theme } = useContext(ShopContext);
 
@@ -23,22 +24,25 @@ const Input = ({
     [theme]
   );
 
+  // Nếu có lỗi, thêm class border đỏ
+  const errorClass = error ? "border-red-500" : "";
+
   return (
     <div className="w-full">
-      <p className="mb-3 text-sm">{label}</p>
+      <p className="mb-1 text-sm">{label}</p>
       {isSelect ? (
         <select
           name={name}
           value={JSON.stringify(value)}
           onChange={onChange}
           required={required}
-          className={`${inputClass} ${
+          className={`${inputClass} ${errorClass} ${
             options.length === 0 ? "cursor-not-allowed" : "cursor-pointer"
           }`}
-          disabled={options.length === 0 ? true : false}
+          disabled={options.length === 0}
         >
-          <option value="" disabled hidden>
-            {`Chọn ${label.toLowerCase()}`}
+          <option value={JSON.stringify({ code: "", name: "" })} disabled>
+            Chọn {label.toLowerCase()}
           </option>
           {options.map((option, index) => (
             <option
@@ -57,10 +61,11 @@ const Input = ({
           value={value}
           onChange={onChange}
           required={required}
-          className={inputClass}
+          className={`${inputClass} ${errorClass}`}
           placeholder={`Nhập ${label.toLowerCase()} của bạn`}
         />
       )}
+      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
   );
 };

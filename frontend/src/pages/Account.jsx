@@ -31,15 +31,16 @@ const Account = () => {
   // const [action, setAction] = useState("address");
   const [isShowForm, setIsShowForm] = useState(false);
   const [currentEditedAddressId, setCurrentEditedAddressId] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const [address, setAddress] = useState({
     firstName: "",
     lastName: "",
     email: "",
     street: "",
-    province: {},
-    district: {},
-    ward: {},
+    province: { code: "", name: "" },
+    district: { code: "", name: "" },
+    ward: { code: "", name: "" },
     zipcode: "",
     phone: "",
   });
@@ -68,32 +69,25 @@ const Account = () => {
   const onChangeHandler = useCallback((e) => {
     const { name, value } = e.target;
 
-    if (name === "province") {
-      const provinece = JSON.parse(value);
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+
+    if (name === "province" || name === "district" || name === "ward") {
+      const obj = JSON.parse(value || "{}");
       setAddress((data) => ({
         ...data,
-        province: provinece,
-        district: {},
-        ward: {},
+        [name]: obj,
+        ...(name === "province" && {
+          district: { code: "", name: "" },
+          ward: { code: "", name: "" },
+        }),
+        ...(name === "district" && { ward: { code: "", name: "" } }),
       }));
-      setDistricts([]);
-      // setProvinceCode(provinece.code);
-      setWards([]);
-    } else if (name === "district") {
-      const district = JSON.parse(value);
-      setAddress((data) => ({
-        ...data,
-        district: district,
-        ward: {},
-      }));
-      setWards([]);
-      // setDistrictCode(district.code);
-    } else if (name === "ward") {
-      const ward = JSON.parse(value);
-      setAddress((data) => ({
-        ...data,
-        ward: ward,
-      }));
+      if (name === "province") {
+        setDistricts([]);
+        setWards([]);
+      } else if (name === "district") {
+        setWards([]);
+      }
     } else {
       setAddress((data) => ({ ...data, [name]: value }));
     }
@@ -101,30 +95,31 @@ const Account = () => {
 
   const handleAddOrUpdateAddress = async (e) => {
     e.preventDefault();
+    if (!validateAddress()) return;
 
     try {
-      const response =
-        currentEditedAddressId !== null
-          ? await axios.post(
-              `${url}/api/address/editaddress`,
-              { address, addressId: currentEditedAddressId },
-              { headers: { token } }
-            )
-          : await axios.post(
-              `${url}/api/address/add`,
-              { address },
-              { headers: { token } }
-            );
+      const endpoint = currentEditedAddressId
+        ? `${url}/api/address/editaddress`
+        : `${url}/api/address/add`;
+
+      const payload = {
+        address,
+        ...(currentEditedAddressId && { addressId: currentEditedAddressId }),
+      };
+      const response = await axios.post(endpoint, payload, {
+        headers: { token },
+      });
 
       if (response.data.success) {
+        // reset
         setAddress({
           firstName: "",
           lastName: "",
           email: "",
           street: "",
-          province: "",
-          district: "",
-          ward: "",
+          province: { code: "", name: "" },
+          district: { code: "", name: "" },
+          ward: { code: "", name: "" },
           zipcode: "",
           phone: "",
         });
@@ -175,6 +170,39 @@ const Account = () => {
     }
   };
 
+  console.log("address", address);
+
+  const validateAddress = () => {
+    const newErrors = {};
+    if (!address.firstName.trim())
+      newErrors.firstName = "Tên không được để trống";
+    if (!address.lastName.trim()) newErrors.lastName = "Họ không được để trống";
+    if (!address.email.trim()) newErrors.email = "Email không được để trống";
+    else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(address.email))
+        newErrors.email = "Email không hợp lệ";
+    }
+    if (!address.province.name)
+      newErrors.province = "Vui lòng chọn tỉnh/thành phố";
+    if (!address.district.name) newErrors.district = "Vui lòng chọn quận/huyện";
+    if (!address.ward.name) newErrors.ward = "Vui lòng chọn phường/xã";
+    if (!address.street.trim())
+      newErrors.street = "Địa chỉ không được để trống";
+    if (!address.zipcode) newErrors.zipcode = "Mã bưu điện không được để trống";
+    if (!address.phone.trim())
+      newErrors.phone = "Số điện thoại không được để trống";
+    else {
+      // kiểm tra số điện thoại chỉ gồm số và độ dài hợp lý (vd: 10-11 số)
+      const phoneRegex = /^[0-9]{10,11}$/;
+      if (!phoneRegex.test(address.phone))
+        newErrors.phone = "Số điện thoại không hợp lệ";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   useEffect(() => {
     fetchAddress();
   }, [token]);
@@ -184,12 +212,12 @@ const Account = () => {
   }, [fetchProvinces]);
 
   useEffect(() => {
-    fetchDistricts(address.province.code);
-  }, [address.province.code, fetchDistricts]);
+    fetchDistricts(address.province?.code);
+  }, [address.province?.code, fetchDistricts]);
 
   useEffect(() => {
-    fetchWards(address.district.code);
-  }, [address.district.code, fetchWards]);
+    fetchWards(address.district?.code);
+  }, [address.district?.code, fetchWards]);
 
   if (!action || !validActions.includes(action)) {
     return <NotFound />;
@@ -326,14 +354,16 @@ const Account = () => {
                         name="firstName"
                         value={address.firstName}
                         onChange={onChangeHandler}
-                        required={true}
+                        // required={true}
+                        error={errors.firstName}
                       />
                       <Input
                         label="Họ"
                         name="lastName"
                         value={address.lastName}
                         onChange={onChangeHandler}
-                        required={true}
+                        // required={true}
+                        error={errors.lastName}
                       />
                     </div>
                     <Input
@@ -342,7 +372,8 @@ const Account = () => {
                       type="email"
                       value={address.email}
                       onChange={onChangeHandler}
-                      required={true}
+                      // required={true}
+                      error={errors.email}
                     />
                     <div className="flex flex-wrap md:flex-nowrap gap-3">
                       <Input
@@ -350,27 +381,30 @@ const Account = () => {
                         name="province"
                         value={address.province}
                         onChange={onChangeHandler}
-                        required={true}
+                        // required={true}
                         isSelect
                         options={provinces}
+                        error={errors.province}
                       />
                       <Input
                         label="Quận/Thị trấn"
                         name="district"
                         value={address.district}
                         onChange={onChangeHandler}
-                        required={true}
+                        // required={true}
                         isSelect
                         options={districts}
+                        error={errors.district}
                       />
                       <Input
                         label="Phường"
                         name="ward"
                         value={address.ward}
                         onChange={onChangeHandler}
-                        required={true}
+                        // required={true}
                         isSelect
                         options={wards}
+                        error={errors.ward}
                       />
                     </div>
                     <Input
@@ -378,7 +412,8 @@ const Account = () => {
                       name="street"
                       value={address.street}
                       onChange={onChangeHandler}
-                      required={true}
+                      // required={true}
+                      error={errors.street}
                     />
                     <Input
                       label="Mã bưu điện"
@@ -386,7 +421,8 @@ const Account = () => {
                       type="number"
                       value={address.zipcode}
                       onChange={onChangeHandler}
-                      required={true}
+                      // required={true}
+                      error={errors.zipcode}
                     />
                     <Input
                       label="Số điện thoại"
@@ -394,7 +430,8 @@ const Account = () => {
                       type="text"
                       value={address.phone}
                       onChange={onChangeHandler}
-                      required={true}
+                      // required={true}
+                      error={errors.phone}
                     />
                     <button
                       type="submit"
