@@ -148,7 +148,7 @@ const Product = () => {
             <img
               src={`${url}/images/` + image}
               className={`w-full h-auto rounded-xl transition-transform duration-300 ${
-                isHovering ? "scale-150" : "scale-100"
+                isHovering ? "scale-[3000]" : "scale-100"
               }`}
               style={{
                 transformOrigin: `${hoverPosition.x}% ${hoverPosition.y}%`,

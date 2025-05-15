@@ -79,7 +79,9 @@ const ShopContextProvider = (props) => {
           if (cartItems[items][item] > 0) {
             totalAmount += itemInfo.price * cartItems[items][item];
           }
-        } catch (error) {}
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
     return totalAmount;
@@ -93,7 +95,9 @@ const ShopContextProvider = (props) => {
           if (cartItems[items][item] > 0) {
             totalCount += cartItems[items][item];
           }
-        } catch (error) {}
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
     return totalCount;
@@ -114,8 +118,6 @@ const ShopContextProvider = (props) => {
   };
 
   const fetchAddress = async () => {
-    console.log("token", token);
-
     const response = await axios.post(
       `${url}/api/address/getalladdress`,
       {},
@@ -207,8 +209,6 @@ const ShopContextProvider = (props) => {
       console.error("Failed to fetch wards", error);
     }
   }, []);
-
-  console.log("cartItems", cartItems);
 
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });

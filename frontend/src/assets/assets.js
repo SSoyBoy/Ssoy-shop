@@ -36,6 +36,7 @@ import bg2 from "./bg2.jpg";
 import shape_1 from "./shape_1.svg";
 import logo_ssoy from "./logo_ssoy.svg";
 import loading_icon from "./loading_icon.svg";
+import fashion from "./fashion.jpg";
 
 import { AiFillYoutube, AiOutlineTwitter } from "react-icons/ai";
 import { FaLinkedinIn } from "react-icons/fa";
@@ -101,6 +102,7 @@ export const assets = {
   shape_1,
   logo_ssoy,
   loading_icon,
+  fashion,
 };
 
 export {

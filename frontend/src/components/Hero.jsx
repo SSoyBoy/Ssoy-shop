@@ -1,25 +1,15 @@
-import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShopContext } from "../context/ShopContext";
 import { FaArrowRightLong } from "../assets/assets";
+import { assets } from "../assets/assets";
 
 const Hero = () => {
-  const { theme } = useContext(ShopContext);
   const navigate = useNavigate();
   return (
     <div className="mx-[6%] relative py-10">
       <div className="w-full cursor-pointer relative overflow-hidden md:w-3/5 mirror ">
         <div className="w-full relative">
           <div className="z-0 relative">
-            <img
-              className="w-full flex rounded"
-              src={
-                theme === "light"
-                  ? "https://cdn.pixabay.com/photo/2017/05/13/12/40/fashion-2309519_640.jpg"
-                  : "https://www.ifema.es/mbfw-madrid/img/desfilando-traje-plumas/rrss-25.jpg"
-              }
-              alt=""
-            />
+            <img className="w-full flex rounded" src={assets.fashion} alt="" />
           </div>
         </div>
       </div>

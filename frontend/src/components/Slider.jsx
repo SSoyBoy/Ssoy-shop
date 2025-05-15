@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "./Title";
 import ProductItem from "./ProductItem";
-import { FaArrowRightLong } from "../assets/assets";
+import { FaArrowRightLong, IoIosArrowUp } from "../assets/assets";
 
 const Slider = () => {
-  const { products, url } = useContext(ShopContext);
+  const { products } = useContext(ShopContext);
   const [counter, setCounter] = useState(0);
   const [size, setSize] = useState(null);
   const [mouseDownAt, setMouseDownAt] = useState(0);
   const [mouseUpAt, setMouseUpAt] = useState(0);
-  const [mouse, setMouse] = useState(0);
+  // const [mouse, setMouse] = useState(0);
 
   const [slider, setSlider] = useState([]);
 
@@ -71,7 +71,6 @@ const Slider = () => {
 
   const handleOnMove = () => {
     const space = mouseDownAt - mouseUpAt;
-    // console.log("space", space);
   };
 
   useEffect(() => {
@@ -133,16 +132,16 @@ const Slider = () => {
             </div>
           </div>
           <button
-            className="absolute left-0 top-[45%] text-2xl select-none text-black px-2 rounded-sm transition-all duration-200 hover:text-white hover:bg-black"
+            className="absolute left-1 top-[45%] text-2xl select-none text-black rounded-sm transition-all duration-200 hover:text-white hover:bg-black"
             onClick={prevSlide}
           >
-            <FaArrowRightLong className="w-6 rotate-180" />
+            <IoIosArrowUp className="w-6 rotate-90" />
           </button>
           <button
-            className="absolute right-0 top-[45%] text-2xl select-none text-black px-2 rounded-sm transition-all duration-200 hover:text-white hover:bg-black"
+            className="absolute right-1 top-[45%] text-2xl select-none text-black rounded-sm transition-all duration-200 hover:text-white hover:bg-black"
             onClick={nextSlide}
           >
-            <FaArrowRightLong className="w-6" />
+            <IoIosArrowUp className="w-6 -rotate-90" />
           </button>
         </div>
       </div>
